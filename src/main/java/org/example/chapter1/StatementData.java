@@ -1,6 +1,8 @@
 package org.example.chapter1;
 
 import lombok.Data;
+import org.example.chapter1.calculator.CalculatorFactoryFactory;
+import org.example.chapter1.calculator.PerformanceCalculator;
 
 import java.util.List;
 import java.util.Map;
@@ -18,8 +20,14 @@ public class StatementData {
         this.plays = plays;
         this.customer = invoice.getCustomer();
         this.performances = invoice.getPerformances().stream()
-                .map(perf -> new EnrichedPerformance(perf, playFor(perf)))
+                .map(this::enrichPerformance)
                 .collect(Collectors.toList());
+    }
+
+    private EnrichedPerformance enrichPerformance(Performance performance) {
+        Play play = playFor(performance);
+        PerformanceCalculator calculator = CalculatorFactoryFactory.createPerformanceCalculator(performance, play);
+        return new EnrichedPerformance(performance, play, calculator.amount(), calculator.volumeCredits());
     }
 
     public Play playFor(Performance performance) {
