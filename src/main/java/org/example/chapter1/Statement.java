@@ -1,16 +1,9 @@
-package org.example;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+package org.example.chapter1;
 
 import java.text.DecimalFormat;
 import java.util.Map;
 
-public class Main {
-    public static void main(String[] args) throws JsonProcessingException {
-    }
-
+public class Statement {
     public String statement(Invoice invoice, Map<String, PlayInfo> plays) {
         int totalAmount = 0;
         int volumeCredits = 0;
