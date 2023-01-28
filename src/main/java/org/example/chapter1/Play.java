@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlayInfo {
+public class Play {
     private String name;
     private String type;
 }

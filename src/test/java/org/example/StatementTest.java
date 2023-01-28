@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.chapter1.Invoice;
 import org.example.chapter1.Statement;
-import org.example.chapter1.PlayInfo;
+import org.example.chapter1.Play;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -22,7 +22,7 @@ class StatementTest {
         String playsJson = """
                 {
                   "hamlet": {
-                    "name": "hamlet",
+                    "name": "Hamlet",
                     "type": "tragedy"
                   },
                   "as-like": {
@@ -36,7 +36,7 @@ class StatementTest {
                 }
                 """;
         String invoiceJson = """
-                [
+
                   {
                     "customer": "BigCo",
                     "performances": [
@@ -54,10 +54,9 @@ class StatementTest {
                       }
                     ]
                   }
-                ]
                 """;
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, PlayInfo> plays = objectMapper.readValue(playsJson, new TypeReference<>() {});
+        Map<String, Play> plays = objectMapper.readValue(playsJson, new TypeReference<>() {});
         Invoice invoice = objectMapper.readValue(invoiceJson, Invoice.class);
 
         //when
