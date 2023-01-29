@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 @Data
 public class StatementData {
 
-    private String customer;
-    private Map<String, Play> plays;
-    private List<EnrichedPerformance> performances;
+    private final String customer;
+    private final Plays plays;
+    private final List<EnrichedPerformance> performances;
 
     public StatementData(Invoice invoice, Map<String, Play> plays) {
-        this.plays = plays;
+        this.plays = new Plays(plays);
         this.customer = invoice.getCustomer();
         this.performances = invoice.getPerformances().stream()
                 .map(this::enrichPerformance)
