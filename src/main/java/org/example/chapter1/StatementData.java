@@ -30,7 +30,7 @@ public class StatementData {
         return new EnrichedPerformance(performance, play, calculator.amount(), calculator.volumeCredits());
     }
 
-    public Play playFor(Performance performance) {
+    private Play playFor(Performance performance) {
         return plays.get(performance.getPlayID());
     }
 
