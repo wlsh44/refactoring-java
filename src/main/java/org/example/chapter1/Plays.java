@@ -10,7 +10,7 @@ public class Plays {
         this.plays = plays;
     }
 
-    public Play get(String playID) {
-        return plays.get(playID);
+    public Play playFor(Performance performance) {
+        return plays.get(performance.getPlayID());
     }
 }

@@ -16,22 +16,24 @@ public class StatementData {
     private final Plays plays;
     private final List<EnrichedPerformance> performances;
 
-    public StatementData(Invoice invoice, Map<String, Play> plays) {
-        this.plays = new Plays(plays);
-        this.customer = invoice.getCustomer();
-        this.performances = invoice.getPerformances().stream()
-                .map(this::enrichPerformance)
-                .collect(Collectors.toList());
+    private StatementData(String customer, Plays plays, List<EnrichedPerformance> performances) {
+        this.customer = customer;
+        this.plays = plays;
+        this.performances = performances;
     }
 
-    private EnrichedPerformance enrichPerformance(Performance performance) {
-        Play play = playFor(performance);
+    public static StatementData createStatementData(Invoice invoice, Map<String, Play> playIDPlayMap) {
+        Plays plays = new Plays(playIDPlayMap);
+        List<EnrichedPerformance> performances = invoice.getPerformances().stream()
+                .map(performance -> enrichPerformance(performance, plays))
+                .collect(Collectors.toList());
+        return new StatementData(invoice.getCustomer(), plays, performances);
+    }
+
+    private static EnrichedPerformance enrichPerformance(Performance performance, Plays plays) {
+        Play play = plays.playFor(performance);
         PerformanceCalculator calculator = CalculatorFactoryFactory.createPerformanceCalculator(performance, play);
         return new EnrichedPerformance(performance, play, calculator.amount(), calculator.volumeCredits());
-    }
-
-    private Play playFor(Performance performance) {
-        return plays.get(performance.getPlayID());
     }
 
     public int totalVolumeCredits() {
